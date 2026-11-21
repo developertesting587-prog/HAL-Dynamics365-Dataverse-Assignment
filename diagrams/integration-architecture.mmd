@@ -1,0 +1,24 @@
+flowchart LR
+    Customer[Customer] -->|Auth0 sign-in| Magento[Magento Storefront]
+    Customer -->|Registration| Magento
+    Magento -->|HTTPS REST: registration/company data| Profile[Profile Service]
+    Profile -->|HTTPS REST: create/update company and contact| CRMAPI[CRM API facade]
+    CRMAPI -->|HTTPS Dataverse Web API| DV[(Microsoft Dataverse)]
+    Staff[Internal Staff] -->|Entra ID sign-in| Admin[Admin Backoffice]
+    Admin -->|HTTPS REST| CRMAPI
+    Admin -.->|Future option: secured Dataverse-backed API| DV
+
+    Magento -->|Catalog changes| CatalogSync[Catalog Sync Integration]
+    CatalogSync -->|Dataverse Web API| DV
+
+    DV -->|Async business events| Bus[(Azure Service Bus)]
+    Bus --> Notify[Notification / OTP Service]
+    Bus --> Other[Other subscribed services]
+
+    Financing[Financing Portal] -->|HTTPS REST: application| FinAPI[Financing Integration API]
+    FinAPI -->|Dataverse Web API| DV
+    FinAPI -->|Partner-specific API / agreed protocol| Banks[Lending Partners]
+    Banks -->|Decision/status callback or polling| FinAPI
+    FinAPI -->|Update application and partner status| DV
+
+    DV <-->|HTTPS REST: document metadata/reference| Docs[Document Service]
