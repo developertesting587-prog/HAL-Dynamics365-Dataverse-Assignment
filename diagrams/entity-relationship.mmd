@@ -1,0 +1,83 @@
+erDiagram
+    ACCOUNT ||--o{ COMPANY_ROLE : has
+    ACCOUNT ||--o{ KYB_CASE : undergoes
+    KYB_CASE ||--o{ KYB_DOCUMENT : contains
+    ACCOUNT ||--o{ ONBOARDING_STEP : tracks
+    ACCOUNT ||--o{ FINANCING_APPLICATION : submits
+    FINANCING_APPLICATION ||--o{ FINANCING_APPLICATION_PARTNER : routed_to
+    LENDING_PARTNER ||--o{ FINANCING_APPLICATION_PARTNER : receives
+    ACCOUNT ||--o{ COMPANY_CONTACT_ROLE : associates
+    CONTACT ||--o{ COMPANY_CONTACT_ROLE : represents
+
+    ACCOUNT {
+        string accountid PK
+        string name
+        string externalcompanyid UK
+        string registrationnumber
+        string country
+        string companystatus
+        string onboardingstatus
+    }
+    CONTACT {
+        string contactid PK
+        string firstname
+        string lastname
+        string email
+        string auth0userid
+    }
+    COMPANY_ROLE {
+        string companyroleid PK
+        string accountid FK
+        string roletype
+        string status
+    }
+    KYB_CASE {
+        string kybcaseid PK
+        string accountid FK
+        string casenumber
+        string status
+        date submissiondate
+        date decisiondate
+    }
+    KYB_DOCUMENT {
+        string kybdocumentid PK
+        string kybcaseid FK
+        string documenttype
+        string documentstatus
+        string documentservicereference
+    }
+    ONBOARDING_STEP {
+        string onboardingstepid PK
+        string accountid FK
+        string stepname
+        string status
+        int sequencenumber
+    }
+    FINANCING_APPLICATION {
+        string financingapplicationid PK
+        string accountid FK
+        string applicantcontactid FK
+        string applicationnumber
+        string applicationtype
+        decimal requestedamount
+        string status
+    }
+    LENDING_PARTNER {
+        string lendingpartnerid PK
+        string partnername
+        string externalpartnercode
+    }
+    FINANCING_APPLICATION_PARTNER {
+        string applicationpartnerid PK
+        string financingapplicationid FK
+        string lendingpartnerid FK
+        string partnerapplicationreference
+        string decisionstatus
+    }
+    COMPANY_CONTACT_ROLE {
+        string companycontactroleid PK
+        string accountid FK
+        string contactid FK
+        string role
+        boolean isprimary
+    }
