@@ -1,0 +1,16 @@
+{
+  "eventId": "7b4e5f5a-8e9a-4d10-a8d0-1c0c2a0f0001",
+  "eventType": "KYBDecisionRecorded",
+  "eventVersion": "1.0",
+  "occurredOn": "2026-11-21T10:30:00Z",
+  "correlationId": "corr-20261121-000123",
+  "source": "Dataverse",
+  "data": {
+    "companyId": "dataverse-account-guid",
+    "externalCompanyId": "MAG-COMP-10025",
+    "kybCaseId": "dataverse-kybcase-guid",
+    "decision": "Approved",
+    "decisionBy": "reviewer-user-guid",
+    "decisionReason": null
+  }
+}
